@@ -1,0 +1,380 @@
+-- db_puskesmas.ms_kendaraan definition
+
+CREATE TABLE `ms_kendaraan` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `kode_puskesmas` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kode_kendaraan` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nama` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `plat_nomor` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `expired_pajak` date DEFAULT NULL,
+  `expired_stnk` date DEFAULT NULL,
+  `tipe` enum('motor','mobil') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `keterangan` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `status` int DEFAULT '1' COMMENT '1=aktif;0=hapus',
+  `insert_by_id` int DEFAULT NULL,
+  `insert_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `insert_by` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `update_at` datetime DEFAULT NULL,
+  `update_by` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- db_puskesmas.ms_menu definition
+
+CREATE TABLE `ms_menu` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nama` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `menu` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `icon` text COLLATE utf8mb4_unicode_ci,
+  `route` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `db` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int DEFAULT NULL COMMENT '1=aktif,0=hapus',
+  `insert_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `insert_by` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `notif_mfk` int DEFAULT '0' COMMENT '1=notif aktif;0=tidak',
+  `urutan` int DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- db_puskesmas.ms_puskesmas definition
+
+CREATE TABLE `ms_puskesmas` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `kode` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nama_puskesmas` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- db_puskesmas.ms_ruang definition
+
+CREATE TABLE `ms_ruang` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nama` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `value` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kode` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kode_puskesmas` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int DEFAULT '1' COMMENT '1=aktif; 0=hapus',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- db_puskesmas.tb_apar definition
+
+CREATE TABLE `tb_apar` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `no_apar` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `lokasi` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `jenis` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `tgl_input` date DEFAULT NULL,
+  `tgl_kedaluwarsa` date DEFAULT NULL,
+  `kapasitas` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `selang` enum('baik','tidak baik','belum dicek') COLLATE utf8mb4_general_ci DEFAULT 'belum dicek',
+  `pin` enum('baik','tidak baik','belum dicek') COLLATE utf8mb4_general_ci DEFAULT 'belum dicek',
+  `isi_tabung` enum('baik','tidak baik','belum dicek') COLLATE utf8mb4_general_ci DEFAULT 'belum dicek',
+  `handle_apar` enum('baik','tidak baik','belum dicek') COLLATE utf8mb4_general_ci DEFAULT 'belum dicek',
+  `tekanan_gas` enum('baik','tidak baik','belum dicek') COLLATE utf8mb4_general_ci DEFAULT 'belum dicek',
+  `corong_bawah` enum('baik','tidak baik','belum dicek') COLLATE utf8mb4_general_ci DEFAULT 'belum dicek',
+  `kebersihan` enum('baik','tidak baik','belum dicek') COLLATE utf8mb4_general_ci DEFAULT 'belum dicek',
+  `status` int DEFAULT NULL COMMENT '1=ada, 0=hapus',
+  `insert_by_id` int DEFAULT NULL,
+  `insert_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `insert_by` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `update_at` datetime DEFAULT NULL,
+  `update_by` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+-- db_puskesmas.tb_gas_medik definition
+
+CREATE TABLE `tb_gas_medik` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `tgl_input` datetime DEFAULT NULL,
+  `ruang` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ketersediaan` enum('ada','tidak ada') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'tidak ada',
+  `kondisi` enum('berfungsi','tidak berfungsi') COLLATE utf8mb4_unicode_ci DEFAULT 'tidak berfungsi',
+  `insert_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `status` int DEFAULT '1',
+  `insert_by_id` int DEFAULT NULL,
+  `insert_by` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `update_at` datetime DEFAULT NULL,
+  `update_by` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- db_puskesmas.tb_ipal definition
+
+CREATE TABLE `tb_ipal` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `tgl_input` datetime DEFAULT NULL,
+  `debit` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ph` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `suhu` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sensor_wlc` enum('berfungsi','mati') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sensor_pompa_inlet` enum('berfungsi','mati') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pompa_pendingin` enum('berfungsi','mati') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bak_pendingin` enum('berfungsi','mati') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kondisi_panel` enum('berfungsi','mati') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int DEFAULT NULL COMMENT '1=aktif,0=hapus',
+  `insert_by_id` int DEFAULT NULL,
+  `insert_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `insert_by` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `update_at` datetime DEFAULT NULL,
+  `update_by` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- db_puskesmas.tb_jaringan definition
+
+CREATE TABLE `tb_jaringan` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `tgl_input` date DEFAULT NULL,
+  `ruang` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `switch_hub` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kabel_lan` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `indikator_lampu` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tes_ping_kecepatan` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `keterangan` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `tindak_lanjut` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `status` int DEFAULT '1' COMMENT '1=aktif;0=hapus',
+  `insert_by_id` int DEFAULT NULL,
+  `insert_by` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `insert_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `update_at` datetime DEFAULT NULL,
+  `update_by` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- db_puskesmas.tb_kelistrikan definition
+
+CREATE TABLE `tb_kelistrikan` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `ruang` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tgl_input` date DEFAULT NULL,
+  `pengkabelan` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `colokan` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `stop_kontak` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sakelar` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `keterangan` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `tindak_lanjut` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `status` int DEFAULT '1' COMMENT '1=aktif; 0=hapus',
+  `insert_by_id` int DEFAULT NULL,
+  `insert_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `insert_by` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `update_at` datetime DEFAULT NULL,
+  `update_by` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- db_puskesmas.tb_kendaraan_puskesmas definition
+
+CREATE TABLE `tb_kendaraan_puskesmas` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `tgl_input` date DEFAULT NULL,
+  `kode_kendaraan` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `karburator` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `penyetelan_klep` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `busi` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ganti_oli` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ring_piston` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pelek` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `rantai` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gir` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ban` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bearing_roda` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kampas_rem` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `keretakan_ban` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lampu_utama` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lampu_sein` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sambungan_kabel` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kondisi_kabel` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bohlam` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `klakson` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int DEFAULT '1' COMMENT '1=aktif;0=hapus',
+  `keterangan` text COLLATE utf8mb4_unicode_ci,
+  `tindak_lanjut` text COLLATE utf8mb4_unicode_ci,
+  `insert_by_id` int DEFAULT NULL,
+  `insert_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `insert_by` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `update_at` datetime DEFAULT NULL,
+  `update_by` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- db_puskesmas.tb_menu definition
+
+CREATE TABLE `tb_menu` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_user` int DEFAULT NULL,
+  `menu` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int DEFAULT NULL,
+  `insert_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `insert_by` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- db_puskesmas.tb_mobil_pusling definition
+
+CREATE TABLE `tb_mobil_pusling` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `tgl_input` date DEFAULT NULL,
+  `kode_kendaraan` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `karburator` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `penyetelan_klep` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `busi` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ganti_oli` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ring_piston` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pelek` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `rantai` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gir` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ban` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bearing_roda` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kampas_rem` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `keretakan_ban` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lampu_utama` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lampu_sein` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sambungan_kabel` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kondisi_kabel` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bohlam` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `klakson` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `air_wiper` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `karet_wiper` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kunci_kunci` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `alat_pengganti_ban` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `p3k` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int DEFAULT '1' COMMENT '1=aktif;0=hapus',
+  `keterangan` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `tindak_lanjut` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `insert_by_id` int DEFAULT NULL,
+  `insert_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `insert_by` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `update_at` datetime DEFAULT NULL,
+  `update_by` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- db_puskesmas.tb_notifikasi_mfk definition
+
+CREATE TABLE `tb_notifikasi_mfk` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `kode_puskesmas` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kode_menu` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `jumlah` int DEFAULT '0',
+  `status` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT '1',
+  `insert_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `insert_by` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- db_puskesmas.tb_pagar_selasar definition
+
+CREATE TABLE `tb_pagar_selasar` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `tgl_input` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ruang` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tangga` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ram` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `keterangan` text COLLATE utf8mb4_unicode_ci,
+  `tindak_lanjut` text COLLATE utf8mb4_unicode_ci,
+  `status` int DEFAULT NULL COMMENT '1=aktif;0=hapus',
+  `insert_by_id` int DEFAULT NULL,
+  `insert_by` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `insert_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `update_by` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `update_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- db_puskesmas.tb_pencahayaan_ventilasi definition
+
+CREATE TABLE `tb_pencahayaan_ventilasi` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `tgl_input` date DEFAULT NULL,
+  `ruang` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lampu` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pencahayaan` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `jendela` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `exhaust_fan` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `air_conditioner` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `keterangan` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `tindak_lanjut` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `status` int DEFAULT NULL COMMENT '1=aktif;0=hapus',
+  `insert_by_id` int DEFAULT NULL,
+  `insert_by` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `insert_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `update_at` datetime DEFAULT NULL,
+  `update_by` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- db_puskesmas.tb_pengairan definition
+
+CREATE TABLE `tb_pengairan` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `tgl_input` date DEFAULT NULL,
+  `ruang` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sumber_air` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kran_air` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kualitas_air` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `wastafel` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `keterangan` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `tindak_lanjut` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `status` int DEFAULT NULL COMMENT '1=aktif;0=hapus',
+  `insert_by_id` int DEFAULT NULL,
+  `insert_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `insert_by` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `update_at` datetime DEFAULT NULL,
+  `update_by` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- db_puskesmas.tb_proteksi_petir definition
+
+CREATE TABLE `tb_proteksi_petir` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `tgl_input` date DEFAULT NULL,
+  `ruang` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `batang_penangkal_petir` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kabel_konduktor_murni` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tempat_pembumian` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `penangkal_petir` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `keterangan` text COLLATE utf8mb4_unicode_ci,
+  `tindak_lanjut` text COLLATE utf8mb4_unicode_ci,
+  `status` int DEFAULT '1' COMMENT '1=aktif;0=hapus',
+  `insert_by_id` int DEFAULT NULL,
+  `insert_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `insert_by` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `update_at` datetime DEFAULT NULL,
+  `update_by` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- db_puskesmas.users definition
+
+CREATE TABLE `users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nama` varchar(500) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `username` varchar(500) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `password` varchar(500) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `puskesmas` varchar(500) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `_token` text COLLATE utf8mb3_unicode_ci NOT NULL,
+  `is_admin` int DEFAULT '0',
+  `status` int DEFAULT '1' COMMENT '1=aktif,0=hapus',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
